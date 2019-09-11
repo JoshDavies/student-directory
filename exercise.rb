@@ -15,9 +15,12 @@ def print_header
   puts "The students of Villains Academy"
   puts "-----------"
 end
+# only print the students whose name begins with a specific letter
 def print(students)
   students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    if student.chars.shift.upcase == "T"  
+      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 def print_footer(students)
