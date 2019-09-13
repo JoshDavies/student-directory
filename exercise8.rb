@@ -12,7 +12,11 @@ def input_students
     if typo_check == "yes"
       students << {name: name, cohort: cohort}
     end
-    puts "Now we have #{students.count} students"
+    if students.count == 1
+      puts "Now we have 1 student"
+    else
+      puts "Now we have #{students.count} students"
+    end
     name = gets.chomp
     puts "Now add their Cohort month"
     cohort_input = gets.chomp
@@ -36,7 +40,11 @@ def print(students)
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  if students.count == 1
+    puts "Overall, we have #{students.count} great student"   
+  else
+    puts "Overall, we have #{students.count} great students"
+  end
 end
 
 students = input_students
