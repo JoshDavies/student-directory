@@ -2,13 +2,13 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return thrice"
   students = []
-  name = gets.chomp
+  name = gets.chop
   puts "Now add their Cohort month"
-  cohort_input = gets.chomp
+  cohort_input = gets.chop
   while !name.empty? do
     cohort = cohort_input.to_sym
     puts "Is the above infomation correct?"
-    typo_check = gets.chomp
+    typo_check = gets.chop
     if typo_check == "yes"
       students << {name: name, cohort: cohort}
     end
@@ -17,9 +17,9 @@ def input_students
     else
       puts "Now we have #{students.count} students"
     end
-    name = gets.chomp
+    name = gets.chop
     puts "Now add their Cohort month"
-    cohort_input = gets.chomp
+    cohort_input = gets.chop
   end
   students
 end
@@ -31,7 +31,7 @@ end
 
 def print(students)
   puts "name which cohort month to print"
-  print_cohort = gets.chomp
+  print_cohort = gets.chop
   students.each_with_index do |student, index|
     if print_cohort == "#{student[:cohort]}"
       puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
