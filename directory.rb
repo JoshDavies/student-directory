@@ -18,11 +18,14 @@ end
 def process(selection)
   case selection
     when "1"
+      puts "Please enter the names of the students" 
       input_students
     when "2"
+      puts "The students of Villains Academy"
       print_students
     when "3"
       save_students
+      puts "Students saved to file"
     when "4"
       load_students
     when "9"
@@ -33,7 +36,6 @@ def process(selection)
 end
 
 def input_students
-  puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   name = STDIN.gets.chomp
   input_info(name)
@@ -59,7 +61,6 @@ def add_students(name, cohort)
 end
 
 def print_students
-  puts "The students of Villains Academy"
   spacer
   print_students_list
   spacer
