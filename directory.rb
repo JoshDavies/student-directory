@@ -10,24 +10,21 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file"
+  puts "4. Load the list from a file"
   puts "9. Exit"  
 end
 
 def process(selection)
   case selection
     when "1"
-      puts "Please enter the names of the students" 
       input_students
     when "2"
-      puts "The students of Villains Academy"
       print_students
     when "3"
       save_students
-      puts "Students saved to file"
     when "4"
-      load_students
+      choose_load_file
     when "9"
       exit
     else
@@ -36,6 +33,7 @@ def process(selection)
 end
 
 def input_students
+  puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   name = STDIN.gets.chomp
   input_info(name)
@@ -61,6 +59,7 @@ def add_students(name, cohort)
 end
 
 def print_students
+  puts "The students of Villains Academy"
   spacer
   print_students_list
   spacer
@@ -75,13 +74,25 @@ def print_students_list
 end
 
 def save_students
-  file = File.open("students.csv", "w")
+  puts "Name the file to save to"
+  choose_save_file(STDIN.gets.chomp)
+end
+
+def choose_save_file(filename = "students.csv")
+  file = File.open(filename, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
+  puts "Students saved to #{filename}"
+end
+
+def choose_load_file
+  puts "Name file to load from (Press enter for default)"
+  filename = STDIN.gets.chomp
+  load_students(filename)
 end
 
 def load_students(filename = "students.csv")
