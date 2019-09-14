@@ -20,7 +20,7 @@ def process(selection)
     when "1"
       input_students
     when "2"
-      show_students
+      print_students
     when "3"
       save_students
     when "4"
@@ -28,7 +28,7 @@ def process(selection)
     when "9"
       exit
     else
-      puts "I don't know what you mean, try again"
+      puts "Command unknown, try again"
   end
 end
 
@@ -36,38 +36,41 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   name = STDIN.gets.chomp
-  puts "Enter their cohort"
-  cohort = STDIN.gets.chomp
+  input_info(name)
+  spacer
+end
+
+def input_info(name)
   while !name.empty? do
-    add_students(name, cohort)
-    puts "Now we have #{@students.count} students"
-    name = STDIN.gets.chomp
-    puts "Enter their cohort"
+    puts "Now enter their cohort"
     cohort = STDIN.gets.chomp
+    add_students(name, cohort)
+    students_count
+    name = STDIN.gets.chomp
   end
+end
+
+def students_count
+  puts "#{@students.count} students in Total"
 end
 
 def add_students(name, cohort)
   @students << {name: name, cohort: cohort.to_sym}
 end
 
-def show_students
-  print_header
+def print_students
+  puts "The students of Villains Academy"
+  spacer
   print_students_list
-  print_footer
+  spacer
+  students_count
+  spacer
 end
 
-def print_header
-  puts "The students of Villains Academy"
-  puts "-----------"
-end
 def print_students_list
   @students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
-end
-def print_footer
-  puts "Overall, we have #{@students.count} great students"
 end
 
 def save_students
@@ -78,7 +81,6 @@ def save_students
     file.puts csv_line
   end
   file.close
-  # $ echo 'students.csv' >> .gitignore
 end
 
 def load_students(filename = "students.csv")
@@ -88,18 +90,23 @@ def load_students(filename = "students.csv")
   add_students(name, cohort)
   end
   file.close
+  puts "Loaded #{@students.count} from #{filename}"
+  spacer
 end
 
-def try_load_students(filename = "students.csv")
+def auto_load_students(filename = "students.csv")
   return if filename.nil? 
   if File.exists?(filename) 
     load_students(filename)
-     puts "Loaded #{@students.count} from #{filename}"
   else 
-    puts "Sorry, #{filename} doesn't exist."
+    puts "Sorry, #{filename} does not exist."
     exit 
   end
 end
 
-try_load_students
+def spacer
+  puts "-----------".center(30)
+end
+
+auto_load_students
 interactive_menu
