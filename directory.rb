@@ -79,31 +79,20 @@ def save_students
 end
 
 def choose_save_file(filename = "students.csv")
-  file = File.open(filename, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File.open(filename, "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
   puts "Students saved to #{filename}"
 end
 
 def choose_load_file
-  puts "Name file to load from (Press enter for default)"
+  puts "Name file to load from"
   filename = STDIN.gets.chomp
-  load_students(filename)
-end
-
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-  name, cohort = line.chomp.split(",")
-  add_students(name, cohort)
-  end
-  file.close
-  puts "Loaded #{@students.count} from #{filename}"
-  spacer
+  auto_load_students(filename)
 end
 
 def auto_load_students(filename = "students.csv")
@@ -114,6 +103,17 @@ def auto_load_students(filename = "students.csv")
     puts "Sorry, #{filename} does not exist."
     exit 
   end
+end
+
+def load_students(filename = "students.csv")
+  File.open(filename, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(",")
+      add_students(name, cohort)
+    end
+  end
+  puts "Loaded #{@students.count} from #{filename}"
+  spacer
 end
 
 def spacer
